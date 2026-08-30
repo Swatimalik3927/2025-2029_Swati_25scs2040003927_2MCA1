@@ -1,0 +1,177 @@
+
+A
+INTERNSHIP REPORT
+On
+TRACKING AND ANALYSIS OF SOCIAL MEDIA CONTENT
+ENGAGEMENT METRICS
+Submitted To
+School of Computer Science and Engineering
+IILM University, Greater Noida, U.P.
+In partial fulfilment of the requirement for the award of the degree of
+MASTER OF COMPUTER APPLICATIONS (MCA)
+
+By
+                               Roll Number of Student: 25scs2040003927
+                               Name of Student: SWATI KUMARI
+Batch: 2026-27
+
+CANDIDATE'S DECLARATION
+I, Swati Kumari, do hereby declare that the internship report titled “Tracking and Analysis of Social Media Content Engagement Metrics” has been completed by me to fulfil the requirement for the award of the degree of Master of Computer Applications (MCA). All the references have been quoted and I have not taken as such any material from any other source. I affirm that this report is my own work and has not been submitted to any other institute for any degree/diploma requirement, and further I shall be solely responsible for any kind of copyright violation in this regard.
+
+
+Signature: ____________________
+Student Name: Swati Kumari
+Roll No.:25scs2040003927
+ACKNOWLEDGEMENT
+I am using this opportunity to express my gratitude to everyone who supported me throughout the Internship Program at Codec Technologies. I am thankful for their aspiring guidance, invaluably constructive criticism and friendly advice during this work. I am sincerely grateful to them for sharing their truthful and illuminating views on a number of issues related to this project.
+I would like to thank Dr. Anurag Shrivastava and the entire team at Codec Technologies for providing me the opportunity to work as a Data Analytics Intern and for their continuous support and mentorship throughout the internship period from 15/07/2026 to 15/08/2026.
+I would also like to thank the School of Computer Science and Engineering, IILM University, Greater Noida, for giving me the platform and encouragement to undertake this internship as part of my academic curriculum.
+I express my gratitude to my parents for their blessings and constant support.
+
+
+Signature: ____________________
+Student Name: Swati Kumari
+Roll No.: 25scs2040003927
+INTERNSHIP COMPLETION CERTIFICATE
+
+TABLE OF CONTENTS
+Chapter No.
+Chapter Name
+Page Nos.
+
+Cover Page
+1
+1.
+Candidate's Declaration
+2
+2.
+Acknowledgment
+3
+3.
+Internship Completion Certificate
+4
+4.
+Project Description
+6
+
+4.1 Introduction
+6
+
+4.2 Organization Profile
+6
+
+4.3 Problem Statement
+7
+
+4.4 Project Objectives
+7
+
+4.5 Scope of the Project
+8
+
+4.6 Technologies and Tools Used
+8
+
+4.7 System Architecture
+8-9
+
+4.8 Methodology
+9
+
+4.9 Expected Outcomes
+9
+
+4.10 Certificates of Completion and Communication Proof
+10-11
+5.
+Bibliography/References
+12
+
+CHAPTER 4: PROJECT DESCRIPTION
+4.1 Introduction
+In the current digital era, social media platforms such as Instagram and YouTube have become the primary channels through which brands, creators, and organizations connect with their audiences. The success of any content strategy is no longer measured only by the number of posts published, but by how effectively that content engages its viewers. Metrics such as likes, comments, shares, and impressions provide quantifiable insight into audience behaviour, content quality, and the overall reach of a campaign.
+This project, titled “Tracking and Analysis of Social Media Content Engagement Metrics,” was undertaken during a one-month internship as a Data Analytics Intern at Codec Technologies. The objective of the project is to design a systematic approach for collecting engagement data from social media platforms using their official APIs, analyzing the collected data to identify trends and patterns, and visualizing the results through interactive dashboards built in Power BI and Tableau. Based on this analysis, the project also aims to recommend optimal posting times and content strategies that can help improve audience engagement.
+The project reflects the growing importance of data-driven decision-making in digital marketing and social media management, and it provided practical, hands-on exposure to data collection, data analytics, and business intelligence tools during the internship period.
+4.2 Organization Profile
+Codec Technologies is a global platform dedicated to empowering learners and connecting diverse talent to create meaningful career opportunities worldwide. The organization delivers dedicated IT and business consultancy services across 27+ countries, empowering global innovation and strategic growth. Codec Technologies is recognized as a Google for Education Partner and is ISO 9001:2015 certified, reflecting its commitment to quality standards in its training and consultancy operations.
+The company offers structured internship programs registered under the National Internship Portal (AICTE) and provides interns with an immersive, industry-oriented learning experience. Interns are assigned real-world projects and are mentored by designated Project Head(s), with performance evaluated through periodic reviews conducted by project supervisors.
+Organization Name
+Codec Technologies Pvt. Ltd.
+Designation
+Data Analytics Intern
+Location & Mode
+Pan India, Hybrid
+Duration
+15/07/2026 to 15/08/2026 (1 Month)
+Reporting To
+Assigned Project Head(s)
+
+4.3 Problem Statement
+Organizations and content creators publish large volumes of content on social media platforms such as Instagram and YouTube, but they often lack a structured mechanism to measure and interpret how their audience engages with that content. Engagement data such as likes, comments, shares, and impressions is generated continuously, yet without proper collection and analysis, this data remains underutilized. Content is frequently scheduled based on assumption or convenience rather than actual audience behaviour, resulting in inconsistent reach and engagement.
+There is, therefore, a need for a system that can systematically collect engagement metrics from social media APIs, consolidate them into a structured format, analyze them for meaningful patterns, and present the findings through visual dashboards that support data-driven content strategy decisions, including the identification of optimal posting times.
+4.4 Project Objectives
+To collect content engagement data (likes, comments, shares, and impressions) from Instagram and YouTube using their official APIs.
+To clean, structure, and store the collected data for further analysis.
+To analyze engagement metrics and identify trends across different content types, formats, and time periods.
+To visualize the analyzed data using Power BI and Tableau dashboards for easy interpretation.
+To identify the best-performing posting times based on historical engagement patterns.
+To recommend content strategies that can help improve overall audience engagement and reach.
+4.5 Scope of the Project
+The scope of this project is limited to the analysis of publicly available or account-authorized engagement data from Instagram and YouTube through their respective official APIs (Instagram Graph API and YouTube Data API). The project covers the complete pipeline from data collection to visualization and recommendation, including:
+Extraction of post/video-level metrics such as likes, comments, shares, views, and impressions.
+Time-series analysis of engagement across different days and time slots.
+Comparative analysis of engagement across different content categories/formats (e.g., reels, images, videos, carousels).
+Dashboard creation in Power BI/Tableau for interactive reporting.
+Recommendations on posting schedules and content strategy.
+The project does not cover paid advertisement/campaign performance analysis or platforms beyond Instagram and YouTube, and it operates within the rate limits and data-access permissions granted by each platform's API terms of service.
+4.6 Technologies and Tools Used
+Category
+Tools / Technologies
+Data Source / APIs
+Instagram Graph API, YouTube Data API v3
+Programming Language
+Python (requests, pandas, NumPy)
+Data Storage
+MS Excel / CSV, SQL database
+Data Visualization
+Power BI, Tableau
+Development Environment
+Jupyter Notebook / VS Code
+Version Control
+Git & GitHub
+
+4.7 System Architecture
+The system architecture of the project follows a layered data pipeline consisting of four main stages: Data Collection, Data Processing, Data Storage, and Data Visualization.
+Data Collection Layer: Engagement data is retrieved from Instagram and YouTube using their official APIs through authenticated API calls.
+Data Processing Layer: The raw JSON responses are cleaned, normalized, and transformed into structured tabular data using Python (pandas).
+Data Storage Layer: The processed data is stored in CSV files/SQL tables for persistence and further querying.
+Data Visualization Layer: Power BI and Tableau connect to the stored data to generate interactive dashboards displaying trends in likes, shares, comments, and impressions.
+(Fig. 4.1: Data flows from the Instagram/YouTube APIs → Python-based ETL scripts → structured data store → Power BI/Tableau dashboards → actionable posting-time and content-strategy recommendations.)
+4.8 Methodology
+Requirement Analysis: Identifying the specific engagement metrics (likes, comments, shares, impressions) relevant to content performance evaluation.
+API Integration: Registering developer applications and generating access tokens for the Instagram Graph API and YouTube Data API.
+Data Extraction: Writing Python scripts to fetch post/video-level engagement data at scheduled intervals.
+Data Cleaning and Transformation: Handling missing values, standardizing timestamps, and organizing data by content type and posting time.
+Exploratory Data Analysis: Using pandas and visualization libraries to identify patterns in engagement across time slots and content formats.
+Dashboard Development: Building interactive Power BI and Tableau dashboards to visualize KPIs such as engagement rate, reach, and impressions over time.
+Insight Generation: Interpreting dashboard results to determine the best-performing posting times and content types.
+Recommendation: Compiling actionable recommendations on posting schedules and content strategy based on the analysis.
+4.9 Expected Outcomes
+A structured dataset of engagement metrics (likes, comments, shares, impressions) collected from Instagram and YouTube.
+Interactive Power BI/Tableau dashboards visualizing engagement trends across time and content types.
+Identification of the best-performing days and time slots for posting content.
+A set of data-backed content strategy recommendations to improve audience engagement.
+Practical experience in API integration, data analytics, and business intelligence tool usage gained during the internship.
+4.10 Certificates of Completion and Other Communication Mail Proof
+The Internship Offer Letter and Internship Completion Certificate issued by Codec Technologies are attached below as proof of the internship undertaken.
+Internship Offer Letter
+
+Internship Completion Certificate
+
+CHAPTER 5: BIBLIOGRAPHY/REFERENCES
+1. Meta for Developers. Instagram Graph API Documentation. Available at: https://developers.facebook.com/docs/instagram-api/
+2. Google Developers. YouTube Data API v3 Documentation. Available at: https://developers.google.com/youtube/v3
+3. Microsoft. Power BI Documentation. Available at: https://learn.microsoft.com/power-bi/
+4. Tableau Software. Tableau Desktop Help Documentation. Available at: https://help.tableau.com/
+5. McKinney, W. Python for Data Analysis: Data Wrangling with pandas, NumPy, and Jupyter. O'Reilly Media.
+6. Codec Technologies. Internship Offer Letter and Internship Completion Certificate, 2026.
