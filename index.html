@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Studio | Power BI & MS Excel Analytics Command Center</title>
+    <!-- Bootstrap 5 CSS & FontAwesome / Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- ApexCharts -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <style>
+        :root {
+            --bg-dark: #0b0f19;
+            --card-dark: #151c2c;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --pbi-yellow: #f2c811;
+            --excel-green: #107c41;
+            --yt-red: #ff0000;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(15, 23, 42, 0.8) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(242, 200, 17, 0.1) 0px, transparent 50%),
+                radial-gradient(at 50% 100%, rgba(16, 124, 65, 0.1) 0px, transparent 50%);
+            min-height: 100vh;
+        }
+
+        .navbar-custom {
+            background-color: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .brand-logo-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, #f2c811 0%, #107c41 50%, #0072ff 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: #000;
+            box-shadow: 0 4px 16px rgba(242, 200, 17, 0.4);
+        }
+
+        .social-kpi-card {
+            background: rgba(21, 28, 44, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 24px;
+            transition: all 0.25s ease;
+        }
+
+        .social-kpi-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(242, 200, 17, 0.4);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Power BI Theme Canvas Styles */
+        .pbi-canvas {
+            background-color: #252423;
+            border: 2px solid var(--pbi-yellow);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.6);
+        }
+
+        .pbi-card-visual {
+            background-color: #323130;
+            border: 1px solid #484644;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .pbi-card-val {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--pbi-yellow);
+        }
+
+        .pbi-card-lbl {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #a19f9d;
+            text-transform: uppercase;
+        }
+
+        .post-feed-card {
+            background-color: var(--card-dark);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            overflow: hidden;
+            transition: all 0.25s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .post-feed-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(242, 200, 17, 0.4);
+        }
+
+        .post-thumb-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            background-color: #0f172a;
+            overflow: hidden;
+        }
+
+        .post-thumb-img {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+        }
+
+        .platform-pill {
+            position: absolute;
+            top: 12px; left: 12px;
+            border-radius: 30px;
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .pill-yt { background: rgba(255, 0, 0, 0.9); }
+        .pill-ig { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366); }
+        .pill-tk { background: rgba(0, 242, 254, 0.9); color: #000; }
+
+        .er-badge {
+            position: absolute;
+            bottom: 12px; right: 12px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(242, 200, 17, 0.4);
+            color: var(--pbi-yellow);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .nav-pills .nav-link {
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 30px;
+            padding: 10px 22px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-right: 8px;
+        }
+
+        .nav-pills .nav-link.active {
+            color: #000;
+            background: linear-gradient(135deg, #f2c811 0%, #f7b731 100%);
+            border-color: transparent;
+            font-weight: 700;
+            box-shadow: 0 4px 14px rgba(242, 200, 17, 0.4);
+        }
+
+        .chart-box {
+            background: var(--card-dark);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .excel-btn {
+            background: #107c41;
+            color: #fff;
+            font-weight: 700;
+            border-radius: 30px;
+        }
+        .excel-btn:hover { background: #0b5c30; color: #fff; }
+
+        .pbi-btn {
+            background: #f2c811;
+            color: #000;
+            font-weight: 700;
+            border-radius: 30px;
+        }
+        .pbi-btn:hover { background: #d4ae0b; color: #000; }
+    </style>
+</head>
+<body class="pb-5">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top">
+        <div class="container-fluid px-4 py-1">
+            <a class="navbar-brand d-flex align-items-center gap-3" href="#">
+                <div class="brand-logo-icon">
+                    <i class="bi bi-bar-chart-line-fill"></i>
+                </div>
+                <div>
+                    <div class="fw-extrabold fs-5 tracking-tight text-white d-flex align-items-center gap-2">
+                        Social Media Analytics Studio
+                        <span class="badge bg-warning text-dark rounded-pill px-2 py-1 fs-7">POWER BI & EXCEL</span>
+                    </div>
+                    <span class="d-block text-muted" style="font-size: 0.75rem;">Data Analytics Intern Project | Codec Technologies (Swati Kumari)</span>
+                </div>
+            </a>
+            
+            <div class="d-flex align-items-center gap-2">
+                <a href="/api/export-excel" class="btn excel-btn btn-sm px-3">
+                    <i class="bi bi-file-earmark-excel-fill me-1"></i> MS Excel (.xlsx)
+                </a>
+                <a href="/api/export-dax" class="btn pbi-btn btn-sm px-3">
+                    <i class="bi bi-lightning-charge-fill me-1"></i> Power BI DAX (.dax)
+                </a>
+                <a href="/api/export-csv" class="btn btn-outline-light btn-sm rounded-pill px-3">
+                    <i class="bi bi-download me-1"></i> CSV Dataset
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid px-4 mt-4">
+
+        <!-- Executive KPI Cards -->
+        <div class="row g-4 mb-4">
+            <div class="col-xl-3 col-md-6">
+                <div class="social-kpi-card">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <span class="text-muted small fw-bold text-uppercase">Total Reach (DAX SUM)</span>
+                            <h2 class="fw-extrabold text-white mb-1 mt-2" id="kpi-views">--</h2>
+                            <span class="text-info small fw-bold"><i class="bi bi-eye-fill me-1"></i> Excel & Power BI dataset</span>
+                        </div>
+                        <div class="p-3 rounded-4 bg-warning bg-opacity-10 text-warning fs-3">
+                            <i class="bi bi-file-earmark-spreadsheet"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="social-kpi-card">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <span class="text-muted small fw-bold text-uppercase">Total Engagements</span>
+                            <h2 class="fw-extrabold text-white mb-1 mt-2" id="kpi-engagements">--</h2>
+                            <span class="text-success small fw-bold"><i class="bi bi-heart-fill me-1"></i> Likes, Comments, Shares</span>
+                        </div>
+                        <div class="p-3 rounded-4 bg-success bg-opacity-10 text-success fs-3">
+                            <i class="bi bi-chat-square-heart-fill"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="social-kpi-card">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <span class="text-muted small fw-bold text-uppercase">Avg Engagement Rate</span>
+                            <h2 class="fw-extrabold text-warning mb-1 mt-2" id="kpi-er">--%</h2>
+                            <span class="text-warning small fw-bold"><i class="bi bi-calculator me-1"></i> Power BI DAX Measure</span>
+                        </div>
+                        <div class="p-3 rounded-4 bg-warning bg-opacity-10 text-warning fs-3">
+                            <i class="bi bi-pie-chart-fill"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="social-kpi-card">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <span class="text-muted small fw-bold text-uppercase">Peak Posting Slot</span>
+                            <h2 class="fw-extrabold text-info mb-1 mt-2 fs-3" id="kpi-peak-slot">--</h2>
+                            <span class="text-info small fw-bold" id="kpi-peak-day"><i class="bi bi-clock-history me-1"></i> Peak time window</span>
+                        </div>
+                        <div class="p-3 rounded-4 bg-info bg-opacity-10 text-info fs-3">
+                            <i class="bi bi-calendar-check-fill"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Studio Navigation Pills -->
+        <ul class="nav nav-pills mb-4" id="studioTabs" role="tablist">
+            <li class="nav-item">
+                <button class="nav-link active" id="pbi-tab" data-bs-toggle="tab" data-bs-target="#pbi-pane">
+                    <i class="bi bi-bar-chart-fill me-2"></i> Power BI Desktop Canvas
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="excel-tab" data-bs-toggle="tab" data-bs-target="#excel-pane">
+                    <i class="bi bi-file-earmark-excel me-2"></i> MS Excel Workbook Inspector
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="feed-tab" data-bs-toggle="tab" data-bs-target="#feed-pane">
+                    <i class="bi bi-grid-fill me-2"></i> Content Feed & Thumbnails
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="heatmap-tab" data-bs-toggle="tab" data-bs-target="#heatmap-pane">
+                    <i class="bi bi-fire me-2"></i> 2D Posting Time Heatmap
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="predict-tab" data-bs-toggle="tab" data-bs-target="#predict-pane">
+                    <i class="bi bi-cpu-fill me-2"></i> AI Engagement Predictor
+                </button>
+            </li>
+        </ul>
+
+        <!-- Tab Contents -->
+        <div class="tab-content">
+            
+            <!-- Pane 1: Power BI Canvas Simulator -->
+            <div class="tab-pane fade show active" id="pbi-pane">
+                <div class="pbi-canvas mb-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4 border-bottom border-secondary pb-3">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-layout-sidebar-inset text-warning fs-3"></i>
+                            <div>
+                                <h5 class="fw-bold text-white mb-0">Power BI Desktop - Report Canvas Visual Simulator</h5>
+                                <span class="text-muted small">Model: social_media_engagement.db | Connected to MS Excel Workbook</span>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge bg-warning text-dark fw-bold">DAX ENGINE: READY</span>
+                            <a href="/api/export-dax" class="btn btn-outline-warning btn-sm rounded-pill"><i class="bi bi-code-slash me-1"></i> View DAX Measures</a>
+                        </div>
+                    </div>
+
+                    <!-- Power BI Card Visuals Block -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-3">
+                            <div class="pbi-card-visual">
+                                <div class="pbi-card-val" id="pbi-total-reach">--</div>
+                                <div class="pbi-card-lbl">Total Reach [SUM(views)]</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="pbi-card-visual">
+                                <div class="pbi-card-val text-success" id="pbi-total-eng">--</div>
+                                <div class="pbi-card-lbl">Total Engagements</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="pbi-card-visual">
+                                <div class="pbi-card-val text-warning" id="pbi-avg-er">--%</div>
+                                <div class="pbi-card-lbl">Average Engagement Rate</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="pbi-card-visual">
+                                <div class="pbi-card-val text-info" id="pbi-peak-time">--</div>
+                                <div class="pbi-card-lbl">Peak Posting Window</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-lg-7">
+                            <div class="p-3 bg-dark rounded-3 border border-secondary">
+                                <h6 class="fw-bold text-warning mb-3"><i class="bi bi-grid-3x3-gap-fill me-2"></i>Power BI Heatmap Matrix Visual</h6>
+                                <div id="pbi-heatmap-chart" style="min-height: 340px;"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="p-3 bg-dark rounded-3 border border-secondary mb-3">
+                                <h6 class="fw-bold text-warning mb-3"><i class="bi bi-funnel-fill me-2"></i>DAX Query Measure Definitions</h6>
+                                <pre class="bg-black text-info p-3 rounded small" style="max-height: 240px; overflow-y: auto;">
+Total Reach = SUM(Posts[views])
+Total Likes = SUM(Posts[likes])
+Total Engagements = SUM(Posts[likes]) + SUM(Posts[comments]) + SUM(Posts[shares])
+Average Engagement Rate = AVERAGE(Posts[engagement_rate])
+Virality Index = DIVIDE([Total Engagements], [Total Reach], 0) * 100
+Peak Slot ER = MAX(HourlyAnalytics[avg_engagement_rate])
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pane 2: MS Excel Inspector -->
+            <div class="tab-pane fade" id="excel-pane">
+                <div class="chart-box">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <div>
+                            <h5 class="fw-bold text-success mb-1"><i class="bi bi-file-earmark-excel-fill me-2"></i>MS Excel Multi-Sheet Workbook Inspector</h5>
+                            <p class="text-muted small mb-0">File: <code>data/social_media_engagement_analytics.xlsx</code> (Formatted with custom headers, formulas, auto-filters & heatmaps)</p>
+                        </div>
+                        <a href="/api/export-excel" class="btn excel-btn px-4 py-2">
+                            <i class="bi bi-download me-1"></i> Download .XLSX Workbook
+                        </a>
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-md-3">
+                            <div class="p-3 bg-dark rounded-3 border border-success">
+                                <h6 class="fw-bold text-success"><i class="bi bi-table me-2"></i>Sheet 1: Summary</h6>
+                                <p class="text-muted small mb-0">KPI Cards, Min/Max/Mean/Std Dev statistics table for all engagement metrics.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="p-3 bg-dark rounded-3 border border-success">
+                                <h6 class="fw-bold text-success"><i class="bi bi-filter-square me-2"></i>Sheet 2: Cleaned Data</h6>
+                                <p class="text-muted small mb-0">500 Records with Navy Blue headers (#1F4E78), AutoFilter, and number formatting.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="p-3 bg-dark rounded-3 border border-success">
+                                <h6 class="fw-bold text-success"><i class="bi bi-palette me-2"></i>Sheet 3: Heatmap</h6>
+                                <p class="text-muted small mb-0">7-Day x 24-Hour matrix with Excel 3-color scale conditional formatting rules.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="p-3 bg-dark rounded-3 border border-success">
+                                <h6 class="fw-bold text-success"><i class="bi bi-pie-chart me-2"></i>Sheet 4: Benchmarks</h6>
+                                <p class="text-muted small mb-0">Pivot-table style summary by Platform, Content Format, and Category.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pane 3: Content Feed -->
+            <div class="tab-pane fade" id="feed-pane">
+                <div class="d-flex flex-wrap align-items-center justify-content-between mb-4 gap-3">
+                    <div>
+                        <h5 class="fw-bold text-white mb-1"><i class="bi bi-collection-play me-2 text-danger"></i>Content Feed & Thumbnails</h5>
+                        <p class="text-muted small mb-0">Browse real social media content cards with live YouTube video thumbnails.</p>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-3">
+                        <select id="feed-platform" class="form-select bg-dark text-white border-secondary rounded-pill" onchange="loadSocialFeed()">
+                            <option value="All">All Platforms</option>
+                            <option value="YouTube">YouTube</option>
+                            <option value="Instagram">Instagram</option>
+                        </select>
+                        <select id="feed-category" class="form-select bg-dark text-white border-secondary rounded-pill" onchange="loadSocialFeed()">
+                            <option value="All">All Categories</option>
+                            <option value="Tech">Tech</option>
+                            <option value="Education">Education</option>
+                            <option value="Entertainment">Entertainment</option>
+                        </select>
+                        <input type="text" id="feed-search" class="form-control bg-dark text-white border-secondary rounded-pill" placeholder="Search title..." onkeyup="loadSocialFeed()">
+                    </div>
+                </div>
+
+                <div class="row g-4" id="social-feed-grid"></div>
+            </div>
+
+            <!-- Pane 4: Heatmap -->
+            <div class="tab-pane fade" id="heatmap-pane">
+                <div class="chart-box">
+                    <h5 class="fw-bold mb-1"><i class="bi bi-fire text-warning me-2"></i>2D Posting Time Engagement Heatmap Matrix</h5>
+                    <p class="text-muted small mb-4">Average Engagement Rate (%) mapping Day of Week vs Hour of Day</p>
+                    <div id="heatmap-chart" style="min-height: 400px;"></div>
+                </div>
+            </div>
+
+            <!-- Pane 5: Predictor -->
+            <div class="tab-pane fade" id="predict-pane">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="chart-box">
+                            <h5 class="fw-bold mb-2"><i class="bi bi-cpu-fill text-info me-2"></i>AI Engagement Rate Predictor</h5>
+                            <p class="text-muted small mb-4">Random Forest Machine Learning predictor trained on historical engagement metrics.</p>
+                            
+                            <form id="predictor-form" onsubmit="handlePrediction(event)">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label text-muted small fw-bold">Platform</label>
+                                        <select class="form-select bg-dark text-white border-secondary" id="p-platform">
+                                            <option value="YouTube">YouTube</option>
+                                            <option value="Instagram">Instagram</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label text-muted small fw-bold">Format Type</label>
+                                        <select class="form-select bg-dark text-white border-secondary" id="p-format">
+                                            <option value="YouTube Short">YouTube Short</option>
+                                            <option value="YouTube Video">YouTube Video</option>
+                                            <option value="Instagram Reel">Instagram Reel</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label text-muted small fw-bold">Category</label>
+                                        <select class="form-select bg-dark text-white border-secondary" id="p-category">
+                                            <option value="Tech">Tech</option>
+                                            <option value="Education">Education</option>
+                                            <option value="Entertainment">Entertainment</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label text-muted small fw-bold">Day</label>
+                                        <select class="form-select bg-dark text-white border-secondary" id="p-day">
+                                            <option value="Sunday">Sunday</option>
+                                            <option value="Saturday">Saturday</option>
+                                            <option value="Wednesday">Wednesday</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label text-muted small fw-bold">Hour (0-23)</label>
+                                        <input type="number" min="0" max="23" value="10" class="form-control bg-dark text-white border-secondary" id="p-hour">
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label text-muted small fw-bold">Post Title</label>
+                                        <input type="text" value="Power BI & Excel Data Analytics Tutorial 2026" class="form-control bg-dark text-white border-secondary" id="p-title">
+                                    </div>
+                                    <div class="col-12 mt-4">
+                                        <button type="submit" class="btn pbi-btn w-100 fw-bold py-2">
+                                            <i class="bi bi-lightning-charge-fill me-1"></i> Predict Expected Engagement Rate
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <div id="prediction-result" class="mt-4 p-4 rounded-4 bg-dark border border-warning d-none">
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <span class="text-muted small fw-bold">ML PREDICTION RESULT</span>
+                                    <span class="badge bg-warning text-dark fw-bold fs-6" id="res-grade">Grade A+</span>
+                                </div>
+                                <h2 class="fw-extrabold text-warning mb-1" id="res-er">8.48%</h2>
+                                <p class="text-white mb-0" id="res-rec">--</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadOverview();
+            loadHeatmap();
+            loadSocialFeed();
+        });
+
+        function formatNum(num) {
+            if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+            if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+            return num.toLocaleString();
+        }
+
+        async function loadOverview() {
+            const res = await fetch('/api/overview');
+            const data = await res.json();
+            
+            const kpis = data.kpis;
+            document.getElementById('kpi-views').innerText = formatNum(kpis.total_views);
+            document.getElementById('kpi-engagements').innerText = formatNum(kpis.total_likes + kpis.total_comments + kpis.total_shares);
+            document.getElementById('kpi-er').innerText = kpis.avg_engagement_rate + '%';
+            document.getElementById('kpi-peak-slot').innerText = kpis.peak_hour;
+            document.getElementById('kpi-peak-day').innerText = 'Peak Day: ' + kpis.peak_day;
+
+            // Power BI Visual Simulator values
+            document.getElementById('pbi-total-reach').innerText = formatNum(kpis.total_views);
+            document.getElementById('pbi-total-eng').innerText = formatNum(kpis.total_likes + kpis.total_comments + kpis.total_shares);
+            document.getElementById('pbi-avg-er').innerText = kpis.avg_engagement_rate + '%';
+            document.getElementById('pbi-peak-time').innerText = kpis.peak_day + ' @ ' + kpis.peak_hour;
+        }
+
+        async function loadSocialFeed() {
+            const platform = document.getElementById('feed-platform').value;
+            const category = document.getElementById('feed-category').value;
+            const search = document.getElementById('feed-search').value;
+            
+            const res = await fetch(`/api/posts?platform=${platform}&category=${category}&search=${search}`);
+            const data = await res.json();
+            
+            const grid = document.getElementById('social-feed-grid');
+            grid.innerHTML = '';
+            
+            data.posts.slice(0, 24).forEach(p => {
+                let pillClass = p.platform === 'YouTube' ? 'pill-yt' : (p.platform === 'TikTok' ? 'pill-tk' : 'pill-ig');
+                grid.innerHTML += `
+                    <div class="col-xl-3 col-lg-4 col-md-6">
+                        <div class="post-feed-card">
+                            <div class="post-thumb-wrapper">
+                                <img src="${p.thumbnail_url}" class="post-thumb-img" alt="Post thumbnail" onerror="this.src='https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=500'">
+                                <span class="platform-pill ${pillClass}">${p.platform}</span>
+                                <span class="er-badge"><i class="bi bi-fire me-1"></i>${p.engagement_rate}% ER</span>
+                            </div>
+                            <div class="post-card-body">
+                                <h6 class="fw-bold text-white mb-2">${p.title}</h6>
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <span class="badge bg-secondary bg-opacity-25 text-white">${p.format_type}</span>
+                                    <span class="text-muted small">${p.category}</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center text-muted small mt-auto pt-2 border-top border-secondary">
+                                    <span><i class="bi bi-eye-fill me-1"></i>${formatNum(p.views)}</span>
+                                    <span><i class="bi bi-heart-fill me-1 text-danger"></i>${formatNum(p.likes)}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        async function loadHeatmap() {
+            const res = await fetch('/api/heatmap');
+            const data = await res.json();
+
+            const options = {
+                series: data.days.map((day, i) => ({
+                    name: day,
+                    data: data.hours.map((h, j) => ({ x: h, y: data.z_matrix[i][j] }))
+                })),
+                chart: { height: 380, type: 'heatmap', background: 'transparent', toolbar: { show: false } },
+                theme: { mode: 'dark' },
+                dataLabels: { enabled: false },
+                colors: ["#f2c811"],
+                plotOptions: {
+                    heatmap: {
+                        colorScale: {
+                            ranges: [
+                                { from: 0, to: 4, name: 'Low (0-4%)', color: '#151c2c' },
+                                { from: 4.01, to: 7, name: 'Medium (4-7%)', color: '#d4ae0b' },
+                                { from: 7.01, to: 25, name: 'Peak (7%+)', color: '#f2c811' }
+                            ]
+                        }
+                    }
+                }
+            };
+            
+            new ApexCharts(document.querySelector("#heatmap-chart"), options).render();
+            new ApexCharts(document.querySelector("#pbi-heatmap-chart"), options).render();
+        }
+
+        async function handlePrediction(e) {
+            e.preventDefault();
+            const body = {
+                platform: document.getElementById('p-platform').value,
+                format_type: document.getElementById('p-format').value,
+                category: document.getElementById('p-category').value,
+                day_of_week: document.getElementById('p-day').value,
+                posting_hour: document.getElementById('p-hour').value,
+                title: document.getElementById('p-title').value
+            };
+            
+            const res = await fetch('/api/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            });
+            const data = await res.json();
+            
+            document.getElementById('res-er').innerText = data.predicted_engagement_rate + '%';
+            document.getElementById('res-grade').innerText = 'Grade ' + data.grade;
+            document.getElementById('res-rec').innerText = data.recommendation;
+            document.getElementById('prediction-result').classList.remove('d-none');
+        }
+    </script>
+</body>
+</html>
